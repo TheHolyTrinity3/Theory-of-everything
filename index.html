@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Theory of Everything</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--void:#020408;--deep:#050d18;--cosmos:#0a1628;--gold:#c9a84c;--gold-light:#e8c97a;--solar:#ff9d2f;--uv:#7b4fff;--wind:#2dffd8;--text:#d4c9b8;--muted:#6b7a8d;--white:#f0ece4}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--text);font-family:'Cormorant Garamond',serif;overflow-x:hidden;cursor:none}
+.cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:difference}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(201,168,76,0.4);border-radius:50%;pointer-events:none;z-index:9998;transition:all 0.15s ease}
+#starfield{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.6}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(2,4,8,0.9),transparent)}
+.nav-logo{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:0.3em;color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color 0.3s}
+.nav-links a:hover{color:var(--gold)}
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;padding:2rem;overflow:hidden}
+.hero::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 70%);border-radius:50%;animation:pulse 6s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:0.5}50%{transform:scale(1.15);opacity:1}}
+.sun-orb{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#ffe066,#ff9d2f 50%,#c95a00);box-shadow:0 0 40px rgba(255,157,47,0.6),0 0 80px rgba(255,157,47,0.3),0 0 160px rgba(255,157,47,0.1);margin-bottom:3rem;animation:solar-pulse 4s ease-in-out infinite;position:relative}
+.sun-orb::after{content:'';position:absolute;inset:-20px;border-radius:50%;border:1px solid rgba(255,157,47,0.2);animation:ring-expand 3s ease-out infinite}
+@keyframes solar-pulse{0%,100%{box-shadow:0 0 40px rgba(255,157,47,0.6),0 0 80px rgba(255,157,47,0.3),0 0 160px rgba(255,157,47,0.1)}50%{box-shadow:0 0 60px rgba(255,157,47,0.8),0 0 120px rgba(255,157,47,0.4),0 0 240px rgba(255,157,47,0.15)}}
+@keyframes ring-expand{0%{transform:scale(1);opacity:0.6}100%{transform:scale(2);opacity:0}}
+.hero-label{font-family:'Rajdhani',sans-serif;font-weight:300;letter-spacing:0.4em;font-size:0.75rem;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:fadeUp 1s 0.5s forwards}
+.hero-title{font-size:clamp(3rem,8vw,7rem);font-weight:300;line-height:1;text-align:center;color:var(--white);letter-spacing:-0.02em;opacity:0;animation:fadeUp 1s 0.8s forwards}
+.hero-title em{font-style:italic;color:var(--gold-light);display:block}
+.hero-sub{margin-top:2rem;font-size:1.2rem;font-weight:300;font-style:italic;color:var(--muted);text-align:center;max-width:500px;line-height:1.8;opacity:0;animation:fadeUp 1s 1.1s forwards}
+.scroll-hint{position:absolute;bottom:2rem;display:flex;flex-direction:column;align-items:center;gap:0.5rem;opacity:0;animation:fadeUp 1s 2s forwards}
+.scroll-hint span{font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:0.3em;color:var(--muted)}
+.scroll-line{width:1px;height:60px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scroll-drop 2s ease-in-out infinite}
+@keyframes scroll-drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.section{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:8rem 2rem}
+.section-number{font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem;display:block}
+.section-title{font-size:clamp(2rem,4vw,3.5rem);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:3rem;position:relative}
+.section-title::after{content:'';display:block;width:60px;height:1px;background:var(--gold);margin-top:1.5rem}
+.prose{font-size:1.2rem;font-weight:300;line-height:2;color:var(--text);margin-bottom:2rem}
+.prose strong{color:var(--white);font-weight:600}
+.frequencies{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;margin:4rem 0;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.05)}
+.freq-card{padding:2.5rem 2rem;background:var(--deep);position:relative;overflow:hidden;transition:background 0.4s}
+.freq-card:hover{background:var(--cosmos)}
+.freq-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.freq-card.solar::before{background:var(--solar)}.freq-card.uv::before{background:var(--uv)}.freq-card.wind::before{background:var(--wind)}
+.freq-icon{font-size:2rem;margin-bottom:1.2rem;display:block}
+.freq-name{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.8rem}
+.freq-card.solar .freq-name{color:var(--solar)}.freq-card.uv .freq-name{color:var(--uv)}.freq-card.wind .freq-name{color:var(--wind)}
+.freq-desc{font-size:1rem;line-height:1.7;color:var(--muted);font-weight:300}
+.unity-statement{text-align:center;padding:3rem 2rem;border:1px solid rgba(201,168,76,0.2);margin:3rem 0;position:relative}
+.unity-statement::before{content:'∞';position:absolute;top:-1rem;left:50%;transform:translateX(-50%);background:var(--void);padding:0 1rem;color:var(--gold);font-size:1.5rem}
+.unity-statement p{font-size:1.4rem;font-style:italic;color:var(--gold-light);line-height:1.8;font-weight:300}
+.cycle-visual{margin:4rem 0;display:flex;align-items:center;justify-content:center;flex-wrap:wrap}
+.cycle-node{text-align:center;padding:1.5rem}
+.cycle-orb{width:80px;height:80px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.8rem}
+.cycle-orb.you{background:radial-gradient(circle at 40% 40%,#4a9eff,#1a4a8a);box-shadow:0 0 30px rgba(74,158,255,0.3)}
+.cycle-orb.earth{background:radial-gradient(circle at 40% 40%,#4aff9a,#1a5a3a);box-shadow:0 0 30px rgba(74,255,154,0.3)}
+.cycle-orb.sun{background:radial-gradient(circle at 40% 40%,#ffe066,#ff6b00);box-shadow:0 0 30px rgba(255,157,47,0.5)}
+.cycle-orb.blackhole{background:radial-gradient(circle at 50% 50%,#1a0a2e,#000);box-shadow:0 0 30px rgba(123,79,255,0.4),inset 0 0 20px rgba(0,0,0,0.8);border:1px solid rgba(123,79,255,0.3)}
+.cycle-orb.universe{background:radial-gradient(circle at 40% 30%,#2d1b69,#0a0520);box-shadow:0 0 30px rgba(201,168,76,0.3);border:1px solid rgba(201,168,76,0.2)}
+.cycle-label{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted)}
+.cycle-arrow{font-size:1.2rem;color:var(--gold);opacity:0.4;padding:0 0.5rem;align-self:center;margin-bottom:2rem}
+.evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:3rem 0}
+.evidence-card{padding:2rem;border:1px solid rgba(255,255,255,0.06);background:rgba(10,22,40,0.6);transition:border-color 0.3s,transform 0.3s}
+.evidence-card:hover{border-color:rgba(201,168,76,0.3);transform:translateY(-4px)}
+.evidence-status{font-family:'Rajdhani',sans-serif;font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.8rem;display:inline-block;padding:0.2rem 0.6rem;border-radius:2px}
+.status-confirmed{background:rgba(45,255,216,0.1);color:var(--wind)}.status-emerging{background:rgba(201,168,76,0.1);color:var(--gold)}.status-hypothesis{background:rgba(123,79,255,0.1);color:var(--uv)}
+.evidence-title{font-size:1.2rem;color:var(--white);margin-bottom:0.8rem;font-weight:400}
+.evidence-text{font-size:0.95rem;line-height:1.7;color:var(--muted);font-weight:300}
+.hypothesis{margin:4rem 0;padding:3rem;background:linear-gradient(135deg,rgba(123,79,255,0.05),rgba(201,168,76,0.05));border-left:2px solid var(--gold)}
+.hypothesis-label{font-family:'Rajdhani',sans-serif;font-size:0.65rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem}
+.hypothesis p{font-size:1.25rem;font-style:italic;line-height:1.9;color:var(--white);font-weight:300}
+.cosmic-divider{position:relative;z-index:1;text-align:center;padding:2rem 0;overflow:hidden}
+.cosmic-divider::before,.cosmic-divider::after{content:'';position:absolute;top:50%;width:calc(50% - 60px);height:1px;background:linear-gradient(to var(--dir,right),transparent,rgba(201,168,76,0.3))}
+.cosmic-divider::before{left:0;--dir:right}.cosmic-divider::after{right:0;--dir:left}
+.cosmic-divider span{color:var(--gold);font-size:1.5rem}
+footer{position:relative;z-index:1;text-align:center;padding:4rem 2rem 6rem;border-top:1px solid rgba(255,255,255,0.05)}
+footer p{font-family:'Rajdhani',sans-serif;font-size:0.7rem;letter-spacing:0.3em;color:var(--muted);text-transform:uppercase}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.visible{opacity:1;transform:none}
+@media(max-width:700px){.frequencies{grid-template-columns:1fr}.evidence-grid{grid-template-columns:1fr}.nav-links{display:none}.cycle-arrow{display:none}}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<canvas id="starfield"></canvas>
+<nav>
+  <div class="nav-logo">Theory of Everything</div>
+  <ul class="nav-links">
+    <li><a href="#theory">The Theory</a></li>
+    <li><a href="#frequencies">3 Frequencies</a></li>
+    <li><a href="#cycle">Cosmic Cycle</a></li>
+    <li><a href="#science">Science</a></li>
+  </ul>
+</nav>
+<section class="hero">
+  <div class="sun-orb"></div>
+  <span class="hero-label">An Original Theory</span>
+  <h1 class="hero-title">A Theory of<br><em>Everything</em></h1>
+  <p class="hero-sub">The Unified Solar Field, Biological Evolution & Cosmic Consciousness</p>
+  <div class="scroll-hint"><span>Explore</span><div class="scroll-line"></div></div>
+</section>
+<section class="section" id="theory">
+  <span class="section-number reveal">01 — The Foundation</span>
+  <h2 class="section-title reveal">Our Soul Is<br>Our Energy</h2>
+  <p class="prose reveal">Our soul is <strong>borrowed energy</strong> from the Earth — from Gaia. This is why energy affects our moods so directly. When you feel low energy, you feel down, sad, disconnected. When you are full of energy, you feel alive, happy, in love with existence. We come from the Earth's energy field, and when we die, we return to it.</p>
+  <p class="prose reveal">The energy cycle flows continuously: <strong>Us → Earth → Sun → Us</strong>. This is not metaphor. It is the literal path of energy that sustains all life. What we call Vitamin D is really <strong>Vitamin DNA</strong> — sunlight doesn't just feed our bodies, it carries information. It updates us at a cellular level.</p>
+  <div class="unity-statement reveal"><p>"We are not separate from the universe.<br>We are the universe experiencing itself."</p></div>
+</section>
+<div class="cosmic-divider reveal"><span>✦</span></div>
+<section class="section" id="frequencies">
+  <span class="section-number reveal">02 — The Mechanism</span>
+  <h2 class="section-title reveal">Three Frequencies,<br>One Unified Field</h2>
+  <p class="prose reveal">The Sun does not emit one thing. It emits three distinct forces that act together as a <strong>single unified field</strong>. This cannot be reproduced on Earth — no artificial light produces all three in the same cosmic combination. This is why sunlight does something to us that no lamp ever can.</p>
+  <div class="frequencies reveal">
+    <div class="freq-card solar"><span class="freq-icon">☀️</span><div class="freq-name">Solar Wind</div><p class="freq-desc">Charged particles streaming from the Sun, interacting with Earth's magnetic field and every living organism's biological rhythms. Linked to heart rate variability, mood shifts, and geomagnetic biology.</p></div>
+    <div class="freq-card uv"><span class="freq-icon">⚡</span><div class="freq-name">UV Radiation</div><p class="freq-desc">Triggers Vitamin DNA synthesis, activates DNA repair mechanisms, and drives cellular updates. The biological information carrier — minute instructions written into our cells over thousands of years.</p></div>
+    <div class="freq-card wind"><span class="freq-icon">🌊</span><div class="freq-name">Visible Sunlight</div><p class="freq-desc">Regulates serotonin, melatonin, circadian rhythms, and consciousness itself. The frequency of life energy — the one we feel when we step outside and feel truly alive.</p></div>
+  </div>
+  <div class="hypothesis reveal"><div class="hypothesis-label">Core Hypothesis</div><p>Solar wind, UV radiation and visible sunlight interact simultaneously as a unified biological field — producing evolutionary and consciousness effects that cannot be replicated or understood by studying each component in isolation. Science has never tested all three together. That is the gap.</p></div>
+</section>
+<div class="cosmic-divider reveal"><span>✦</span></div>
+<section class="section" id="cycle">
+  <span class="section-number reveal">03 — The Grand Cycle</span>
+  <h2 class="section-title reveal">From Soul to<br>Black Hole to Universe</h2>
+  <div class="cycle-visual reveal">
+    <div class="cycle-node"><div class="cycle-orb you">🧬</div><div class="cycle-label">You</div></div>
+    <div class="cycle-arrow">→</div>
+    <div class="cycle-node"><div class="cycle-orb earth">🌍</div><div class="cycle-label">Earth</div></div>
+    <div class="cycle-arrow">→</div>
+    <div class="cycle-node"><div class="cycle-orb sun">☀️</div><div class="cycle-label">Sun</div></div>
+    <div class="cycle-arrow">→</div>
+    <div class="cycle-node"><div class="cycle-orb blackhole">🌀</div><div class="cycle-label">Black Hole</div></div>
+    <div class="cycle-arrow">→</div>
+    <div class="cycle-node"><div class="cycle-orb universe">✨</div><div class="cycle-label">New Universe</div></div>
+  </div>
+  <p class="prose reveal">The planets in our solar system exist to <strong>stabilise gravity</strong> while the Sun grows. Gas giants refuel the Sun — feeding it hydrogen until it reaches the point of collapse. When a Sun becomes a black hole, it compresses all matter into a single point.</p>
+  <p class="prose reveal">The new universe that emerges receives an <strong>immediate update</strong> — all evolution that happened in the previous cycle is already encoded. Matter escaping the black hole becomes dark matter, scattering across the new universe. The three solar frequencies then activate it, fusing with biological DNA, creating small invisible updates. Evolution across thousands of years.</p>
+  <p class="prose reveal">When we die, our energy — our soul, our light — does not disappear. It <strong>fuses back into the universe</strong>. The next cycle begins with that knowledge already inside it. We are not passengers in this process. We are the process.</p>
+</section>
+<div class="cosmic-divider reveal"><span>✦</span></div>
+<section class="section" id="science">
+  <span class="section-number reveal">04 — The Evidence</span>
+  <h2 class="section-title reveal">Where Science<br>Points This Way</h2>
+  <p class="prose reveal" style="font-style:italic;color:var(--muted);">Some of these connections are well established. Others are emerging. A few remain untested — which is where this theory becomes a genuine scientific hypothesis.</p>
+  <div class="evidence-grid">
+    <div class="evidence-card reveal"><span class="evidence-status status-confirmed">Confirmed</span><div class="evidence-title">Sunlight & Mood</div><p class="evidence-text">Low Vitamin D correlates strongly with depression and fatigue. Sunlight triggers serotonin production. The soul/energy/mood connection has measurable biological reality.</p></div>
+    <div class="evidence-card reveal"><span class="evidence-status status-confirmed">Confirmed</span><div class="evidence-title">Epigenetic Inheritance</div><p class="evidence-text">Environmental influences — including solar exposure — can switch genes on or off. Some of these changes are heritable, passing to offspring. Minute changes over generations is real.</p></div>
+    <div class="evidence-card reveal"><span class="evidence-status status-emerging">Emerging</span><div class="evidence-title">Solar Wind & Biology</div><p class="evidence-text">Solar wind interactions with Earth's magnetosphere have been linked to measurable changes in human heart rate variability and biological rhythms during geomagnetic events.</p></div>
+    <div class="evidence-card reveal"><span class="evidence-status status-emerging">Emerging</span><div class="evidence-title">Heart Electromagnetic Field</div><p class="evidence-text">HeartMath Institute documents the heart's EM field extending several feet outside the body. Heart coherence — heart, brain and breath as one — produces measurable benefits.</p></div>
+    <div class="evidence-card reveal"><span class="evidence-status status-emerging">Emerging</span><div class="evidence-title">Dark Matter Near Stars</div><p class="evidence-text">Published research argues that regions of concentrated visible matter — like near stars — should have lower dark matter density. The solar field may interact with dark matter in ways not yet measured.</p></div>
+    <div class="evidence-card reveal"><span class="evidence-status status-hypothesis">Hypothesis</span><div class="evidence-title">The Unified Solar Field</div><p class="evidence-text">The combined biological effect of solar wind + UV + visible light simultaneously has never been formally studied. The emergent property of all three together is completely unknown territory.</p></div>
+  </div>
+</section>
+<footer><p>A Theory of Everything &nbsp;·&nbsp; Original Work &nbsp;·&nbsp; All Rights Reserved</p></footer>
+<script>
+const canvas=document.getElementById('starfield');const ctx=canvas.getContext('2d');let stars=[];
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+function initStars(){stars=[];for(let i=0;i<200;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.2,alpha:Math.random(),twinkle:Math.random()*Math.PI*2})}
+function drawStars(){ctx.clearRect(0,0,canvas.width,canvas.height);stars.forEach(s=>{s.twinkle+=0.02;s.alpha=0.3+0.4*Math.sin(s.twinkle);ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,240,${s.alpha})`;ctx.fill()});requestAnimationFrame(drawStars)}
+resize();initStars();drawStars();window.addEventListener('resize',()=>{resize();initStars()});
+const cursor=document.getElementById('cursor');const ring=document.getElementById('cursorRing');let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx-4+'px';cursor.style.top=my-4+'px'});
+(function animRing(){rx+=(mx-rx-16)*0.15;ry+=(my-ry-16)*0.15;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+const observer=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('visible'),i*80)})},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
